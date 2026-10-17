@@ -14,7 +14,6 @@
   <img src="https://img.shields.io/badge/Node.js-18%2B-339933?logo=node.js&logoColor=white" alt="Node.js 18+"/>
   <img src="https://img.shields.io/badge/Chrome-Extension%20MV3-4285F4?logo=googlechrome&logoColor=white" alt="Chrome MV3"/>
   <img src="https://img.shields.io/badge/Discord-RPC-5865F2?logo=discord&logoColor=white" alt="Discord RPC"/>
-  <img src="https://img.shields.io/badge/License-MIT-yellow" alt="MIT License"/>
 </p>
 
 ---
