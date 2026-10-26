@@ -1,0 +1,24 @@
+{
+  "name": "rpclirikspotify",
+  "version": "1.0.0",
+  "description": "<p align=\"center\">   <img src=\"https://raw.githubusercontent.com/github/explore/main/topics/discord/discord.png\" width=\"80\" alt=\"Discord\"/>   &nbsp;&nbsp;&nbsp;   <img src=\"https://raw.githubusercontent.com/github/explore/main/topics/spotify/spotify.png\" width=\"80\" alt=\"Spotify\"/> </p>",
+  "main": "rpcspotify.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IlhamRezaPratama/LyricPresence.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/IlhamRezaPratama/LyricPresence/issues"
+  },
+  "homepage": "https://github.com/IlhamRezaPratama/LyricPresence#readme",
+  "dependencies": {
+    "discord-rpc": "^4.0.1",
+    "ws": "^8.22.0"
+  }
+}

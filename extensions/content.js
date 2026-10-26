@@ -1,5 +1,8 @@
 let ws = null;
 let lastPayload = "";
+let lastNoTitleLog = 0;
+
+console.log("[RPC Bridge] Content script loaded:", window.location.href);
 
 function connectWebSocket() {
 
@@ -53,6 +56,16 @@ function getTitle() {
 
         ||
 
+        document.querySelector('[data-testid="now-playing-bar"] a[href*="/track/"]')
+            ?.innerText
+            ?.trim()
+
+        ||
+
+        getPlayerBarText()[0]
+
+        ||
+
         ""
     );
 
@@ -73,8 +86,61 @@ function getArtist() {
 
         ||
 
-        "Unknown"
+        document.querySelector('[data-testid="now-playing-bar"] a[href*="/artist/"]')
+            ?.innerText
+            ?.trim()
 
+        ||
+
+        getPlayerBarText()[1]
+
+        ||
+
+        "Unknown"
+    );
+
+}
+
+function getPlayerBarText() {
+
+    const playerBar =
+        document.querySelector('[data-testid="now-playing-bar"]')
+        || document.querySelector('[data-testid="now-playing-widget"]')
+        || document.querySelector("footer");
+
+    const containerLines = (playerBar?.innerText || "")
+        .split("\n")
+        .map((line) => line.trim())
+        .filter(isPossiblePlayerText);
+
+    if (containerLines.length > 0) {
+        return containerLines;
+    }
+
+    const visibleBottomText = [...document.querySelectorAll("body *")]
+        .filter((element) => {
+            const rect = element.getBoundingClientRect();
+            return (
+                element.children.length === 0
+                && rect.width > 0
+                && rect.height > 0
+                && rect.bottom > window.innerHeight - 180
+            );
+        })
+        .map((element) => element.textContent.trim())
+        .filter(isPossiblePlayerText);
+
+    return [...new Set(visibleBottomText)];
+
+}
+
+function isPossiblePlayerText(line) {
+
+    return (
+        line
+        && line.length <= 120
+        && !/^\d+:\d+$/.test(line)
+        && !/^(play|pause|next|previous|shuffle|repeat|volume|queue)$/i.test(line)
     );
 
 }
@@ -146,7 +212,13 @@ function sendData() {
 
     const title = getTitle();
 
-    if (!title) return;
+    if (!title) {
+        if (Date.now() - lastNoTitleLog > 5000) {
+            console.warn("[RPC Bridge] Spotify song title not found");
+            lastNoTitleLog = Date.now();
+        }
+        return;
+    }
 
     const payload = {
 
@@ -162,7 +234,9 @@ function sendData() {
 
         isPlaying: isPlaying(),
 
-        liveLyric: getCurrentLyric()
+        liveLyric: getCurrentLyric(),
+
+        sentAt: Date.now()
 
     };
 
@@ -176,6 +250,8 @@ function sendData() {
     if (ws?.readyState === WebSocket.OPEN) {
 
         ws.send(json);
+
+        console.log("[RPC Bridge] Song sent:", payload.title, "-", payload.artist);
 
     }
 

@@ -49,7 +49,7 @@
 │  - Detect play/pause │                                         │                      │
 └──────────────────────┘                                         └──────────┬───────────┘
                                                                             │
-        Spotify Web Player                                         Discord IPC
+      Spotify Web Player                                               Discord IPC
       (open.spotify.com)                                                    │
                                                                             ▼
                                                                  ┌──────────────────────┐

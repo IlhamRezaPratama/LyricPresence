@@ -24,7 +24,7 @@ let rpcReady = false;
 
 // Untuk mengatur offset delay Discord, karena bawaan discord RPC itu delaynya sekitar 3-5 detik maka perlu dikompensasi 
 // dengan menambahkan offset agar lirik sinkron dengan lagu. Nilai ini bisa diubah sesuai kebutuhan.
-const DISCORD_DELAY_OFFSET = 2.9;
+const DISCORD_DELAY_OFFSET = 2.8;
 
 
 //bagian LRCLIB
